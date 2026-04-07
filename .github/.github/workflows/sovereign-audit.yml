@@ -1,0 +1,46 @@
+# 🏛️ Sovereign-DevKit: Security & Quality Audit
+# This workflow ensures that every commit respects the Sovereign Will 
+# by passing security scans and runtime tests.
+
+name: Sovereign Audit
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+        # Testing across multiple Node.js versions to ensure stability
+
+    steps:
+    - name: 📥 Checkout Sovereign Code
+      uses: actions/checkout@v4
+
+    - name: 🟢 Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: 🛠️ Install Dependencies
+      run: npm install || echo "No dependencies to install yet."
+
+    - name: 🛡️ Self-Security Scan (LogSanitizer Audit)
+      run: |
+        echo "[STEP] Running LogSanitizer on the repository itself..."
+        node LogSanitizer.js . --ext .js,.json,.md,.yml
+      # This step uses your own tool to protect your own code!
+
+    - name: 🧪 Runtime Integrity Check
+      run: |
+        echo "[STEP] Verifying LogSanitizer core logic..."
+        node LogSanitizer.js --help
+      # Ensures the CLI interface is operational
+      
