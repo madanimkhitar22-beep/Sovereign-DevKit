@@ -1,19 +1,64 @@
-# 🏛️ Sovereign-DevKit
-> **Empowering the Modern Architect with Minimalist, High-Impact Utilities.**
+🏛️ Sovereign-DevKit
 
-Welcome to the **Sovereign-DevKit**, a curated suite of developer tools designed for security, ethical automation, and the decentralized future. Built from the ground up by **El Madani El mkhitar**—engineered with pure intent and a focus on **Sovereign Infrastructure**.
+«Empowering the Modern Architect with Minimalist, High-Impact Utilities.»
 
-## 🛠️ Included Utilities
-- **LogSanitizer.js**: A high-precision security scalpel to detect and prevent API key leaks and sensitive data exposure.
-- *More tools coming soon... (Quantum-ID Generators, Ethical Automation Scripts).*
-
-## 🧘 Philosophy of Build
-This project is an extension of the **Mkhitarian Philosophy**. It proves that high-level global infrastructure can be built from anywhere, even with minimal hardware (developed entirely on a mobile device), as long as the **Sovereign Will** is present.
-
-## 🤝 Support the Mission
-If these tools bring value to your workflow or your company, consider becoming a **Strategic Sponsor**. Your support allows for the continuous development of decentralized trust protocols and ethical software.
-
-[🚀 Sponsor El Madani on GitHub](https://github.com/sponsors/madanimkhitar22-beep)
+Welcome to Sovereign-DevKit, a curated suite of developer tools focused on security, ethical automation, and decentralized resilience.
+Built by El Madani El mkhitar, this toolkit delivers practical utilities designed for modern developers who value clarity, trust, and sovereignty.
 
 ---
-**Status:** Operational | **License:** MIT | **Architect:** @madanimkhitar22-beep
+
+🚀 Quick Start
+
+node LogSanitizer.js path/to/your/file.env
+
+Example Output
+
+[Sovereign-DevKit] Scanning .env...
+[ALERT] OpenAI API Key detected at line 3
+[ACTION REQUIRED] 1 issue(s) detected.
+
+---
+
+🛠️ Included Utilities
+
+- LogSanitizer.js
+Detects sensitive credentials and API key leaks before deployment or commit.
+
+- More utilities coming soon:
+
+   - Quantum-ID Generators
+   - Ethical Automation Scripts
+   - Commit Shield Tools
+
+---
+
+🧘 Philosophy of Build
+
+Sovereign-DevKit extends the spirit of the Mkhitarian Philosophy:
+technology should remain powerful, ethical, and human-centered.
+
+This project demonstrates that impactful infrastructure can be built under minimalist conditions, guided by disciplined intent and sovereign thinking.
+
+---
+
+🗺️ Roadmap
+
+- [ ] Recursive folder scanning
+- [ ] Secret masking
+- [ ] CLI enhancements
+- [ ] npm package release
+
+---
+
+🤝 Support the Mission
+
+If these tools support your workflow, research, or infrastructure, consider supporting the mission:
+
+[🚀 Sponsor El Madani EL MKHITAR on GitHub](https://github.com/sponsors/madanimkhitar22-beep)
+
+
+---
+
+Status: Operational
+License: MIT
+Architect: @madanimkhitar22-beep
