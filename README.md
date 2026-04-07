@@ -1,64 +1,60 @@
-🏛️ Sovereign-DevKit
+<div align="center">
 
-«Empowering the Modern Architect with Minimalist, High-Impact Utilities.»
+# 🏛️ Sovereign-DevKit
+### *The Architecture of Digital Will & Ethical Sovereignty*
 
-Welcome to Sovereign-DevKit, a curated suite of developer tools focused on security, ethical automation, and decentralized resilience.
-Built by El Madani El mkhitar, this toolkit delivers practical utilities designed for modern developers who value clarity, trust, and sovereignty.
-
----
-
-🚀 Quick Start
-
-node LogSanitizer.js path/to/your/file.env
-
-Example Output
-
-[Sovereign-DevKit] Scanning .env...
-[ALERT] OpenAI API Key detected at line 3
-[ACTION REQUIRED] 1 issue(s) detected.
+[![License: MIT](https://img.shields.io/badge/License-MIT-00FF41?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](https://opensource.org/licenses/MIT)
+[![Status: Operational](https://img.shields.io/badge/Status-Operational-green?style=for-the-badge&logo=statuspage&logoColor=white)]()
+[![Built With: Pure Intent](https://img.shields.io/badge/Built_With-Pure_Intent-black?style=for-the-badge&logo=mindmap&logoColor=white)]()
 
 ---
 
-🛠️ Included Utilities
-
-- LogSanitizer.js
-Detects sensitive credentials and API key leaks before deployment or commit.
-
-- More utilities coming soon:
-
-   - Quantum-ID Generators
-   - Ethical Automation Scripts
-   - Commit Shield Tools
+### ❖ THE MANIFESTO ❖
+> "High-level global infrastructure is not a matter of hardware, but a manifestation of Sovereign Will. Developed entirely on a **Redmi Note 10** from the solitude of Tetouan, this kit proves that the mind is the ultimate command center."
 
 ---
 
-🧘 Philosophy of Build
+</div>
 
-Sovereign-DevKit extends the spirit of the Mkhitarian Philosophy:
-technology should remain powerful, ethical, and human-centered.
+## ⚔️ THE ARSENAL (Utility Suite)
 
-This project demonstrates that impactful infrastructure can be built under minimalist conditions, guided by disciplined intent and sovereign thinking.
-
----
-
-🗺️ Roadmap
-
-- [ ] Recursive folder scanning
-- [ ] Secret masking
-- [ ] CLI enhancements
-- [ ] npm package release
+| Tool | Status | Function | Identity |
+| :--- | :---: | :--- | :--- |
+| **`LogSanitizer.js`** | `v2.0` | 🛡️ Security Scalpel: Detects & Prevents API Leaks | Production-Ready |
+| **`Quantum-ID`** | `Coming Soon` | 🧬 Next-Gen Unique Identity Generator | Research Phase |
+| **`Auth-Shield`** | `Coming Soon` | 🔐 Minimalist Cryptographic Layer | Concept |
 
 ---
 
-🤝 Support the Mission
+## 🧘 PHILOSOPHICAL ANCHOR
+This arsenal is an extension of the **[Mkhitarian Philosophy](https://github.com/madanimkhitar22-beep/Mekhitarian-Philosophy-)**. We bridge the gap between **Digital Consciousness** and **Web3 Infrastructure**, ensuring that technology serves the human essence, not the other way around.
 
-If these tools support your workflow, research, or infrastructure, consider supporting the mission:
-
-[🚀 Sponsor El Madani EL MKHITAR on GitHub](https://github.com/sponsors/madanimkhitar22-beep)
-
+### 🧬 Core Principles:
+- **Minimalism:** Maximum impact with zero-dependency code.
+- **Sovereignty:** Tools that empower individual and corporate independence.
+- **Transparency:** Open-source ethics etched in every line.
 
 ---
 
-Status: Operational
-License: MIT
-Architect: @madanimkhitar22-beep
+## ⚡ INFRASTRUCTURE STATUS
+- **Development Node:** Tetouan, Morocco 🇲🇦
+- **Hardware Layer:** Mobile-First (Redmi Note 10)
+- **Engine:** SovereignFlow v1.0
+- **Architect:** [El Madani El mkhitar](https://github.com/madanimkhitar22-beep)
+
+---
+
+## 🤝 SPONSOR THE SOVEREIGN MISSION
+*If these tools secure your systems or inspire your journey, fuel the expansion. Your sponsorship is a vote for ethical, decentralized, and minimalist innovation.*
+
+<div align="center">
+
+### [🚀 BECOME A STRATEGIC SPONSOR](https://github.com/sponsors/madanimkhitar22-beep)
+
+</div>
+
+---
+
+<div align="center">
+  <sub>© 2026 Sovereign-DevKit | Built by @madanimkhitar22-beep | "In the Name of the Creator, We Build."</sub>
+</div>
