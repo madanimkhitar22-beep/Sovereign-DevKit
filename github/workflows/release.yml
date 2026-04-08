@@ -1,0 +1,81 @@
+# ============================================================
+#  Sovereign-DevKit: Automated Release
+#  Triggered when you push a tag like: v3.1.0
+#  Author: El Madani El Mkhitar
+# ============================================================
+
+name: Release — Publish New Version
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Final Leak Scan Before Release
+        run: node LogSanitizer.js . --ext .js,.ts,.json,.env,.yml,.yaml
+
+      - name: Extract Version from Tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Generate Changelog
+        id: changelog
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          if [ -z "$PREV_TAG" ]; then
+            COMMITS=$(git log --pretty=format:"- %s (%h)" HEAD)
+          else
+            COMMITS=$(git log --pretty=format:"- %s (%h)" $PREV_TAG..HEAD)
+          fi
+          echo "COMMITS<<EOF" >> $GITHUB_OUTPUT
+          echo "$COMMITS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          name: "Sovereign-DevKit ${{ steps.version.outputs.VERSION }}"
+          body: |
+            ## Sovereign-DevKit ${{ steps.version.outputs.VERSION }}
+            > Built by El Madani El Mkhitar — Tetouan, Morocco
+            > "The mind is the ultimate command center."
+
+            ### What's included
+            - LogSanitizer.js — 35 sensitive data detectors
+            - Full scan + auto-redact (--fix) support
+            - Folder scanning with extension filtering
+
+            ### Changes in this release
+            ${{ steps.changelog.outputs.COMMITS }}
+
+            ### Quick Start
+            node LogSanitizer.js <file>
+            node LogSanitizer.js ./src
+            node LogSanitizer.js ./src --fix
+
+            ### Philosophical Anchor
+            Part of the Mkhitarian Philosophy — where technology serves human essence.
+          draft: false
+          prerelease: false
+          files: |
+            LogSanitizer.js
+            README.md
