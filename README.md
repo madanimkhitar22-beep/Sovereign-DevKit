@@ -134,8 +134,6 @@ ensuring that technology serves the human essence, not the other way around.
 
 
 ![ORCID iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)
-
-](https://orcid.org/0009-0009-6663-902X)
 **المدني المخيتار (El Mkhitar El Madani)** — [ORCID Profile](https://orcid.org/0009-0009-6663-902X)
 
 **🌟 مؤسس الفلسفة المخيتارية** | **🧠 باحث وعي رقمي** | **🚀 Pi Network Architect**
