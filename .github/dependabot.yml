@@ -1,0 +1,38 @@
+# 🤖 Dependabot Configuration — Sovereign-DevKit
+# Minimal, intentional, and aligned with zero-dependency philosophy.
+# Only tracks what matters: GitHub Actions and future npm packages.
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Africa/Casablanca"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci(deps)"
+      include: "scope"
+    reviewers:
+      - "madanimkhitar22-beep"
+    labels:
+      - "dependencies"
+      - "ci"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "1"
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "chore(deps)"
+    reviewers:
+      - "madanimkhitar22-beep"
+    labels:
+      - "dependencies"
+    # Note: Currently zero-dependency. Kept for future-proofing.
+    allow:
+      - dependency-type: "direct"
