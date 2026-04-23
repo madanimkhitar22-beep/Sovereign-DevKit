@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * ============================================================
  *  Sovereign-DevKit: LogSanitizer.js  v3.1
