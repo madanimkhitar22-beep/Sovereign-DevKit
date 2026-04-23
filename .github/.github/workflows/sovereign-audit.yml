@@ -1,46 +1,119 @@
 # 🏛️ Sovereign-DevKit: Security & Quality Audit
-# This workflow ensures that every commit respects the Sovereign Will 
-# by passing security scans and runtime tests.
+# Ensures every commit respects the Sovereign Will through automated safety checks.
+# Aligned with Mkhitarian Philosophy: Intent • Sovereignty • Transparency
 
 name: Sovereign Audit
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
+    paths:
+      - 'LogSanitizer.js'
+      - '*.json'
+      - '.github/workflows/**'
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
+    paths:
+      - 'LogSanitizer.js'
+      - '*.json'
+      - '.github/workflows/**'
+  workflow_dispatch: # Allow manual trigger for testing
+
+env:
+  NODE_VERSION: '20.x'
+  REPORT_DIR: './audit-reports'
 
 jobs:
-  audit:
+  safety-check:
+    name: 🔐 Safety & Integrity Scan
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-        # Testing across multiple Node.js versions to ensure stability
+    timeout-minutes: 10
 
     steps:
-    - name: 📥 Checkout Sovereign Code
+    - name: 📥 Checkout Repository
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 1 # Shallow clone for speed
 
-    - name: 🟢 Setup Node.js ${{ matrix.node-version }}
+    - name: 🟢 Setup Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
 
-    - name: 🛠️ Install Dependencies
-      run: npm install || echo "No dependencies to install yet."
+    - name: 📦 Install Dependencies (if any)
+      run: npm ci --ignore-scripts || echo "✅ No dependencies required"
 
-    - name: 🛡️ Self-Security Scan (LogSanitizer Audit)
+    - name: 🧪 Validate CLI Interface
       run: |
-        echo "[STEP] Running LogSanitizer on the repository itself..."
-        node LogSanitizer.js . --ext .js,.json,.md,.yml
-      # This step uses your own tool to protect your own code!
+        echo "▶️ Testing CLI help..."
+        node LogSanitizer.js --help | grep -q "v3.1" && echo "✅ CLI version OK"
+    - name: 🔍 Run Self-Scan (Dry-Run Mode)
+      run: |
+        echo "▶️ Scanning repository with --dry-run..."
+        node LogSanitizer.js . \
+          --ext .js,.json,.yml,.md \
+          --dry-run \
+          --report
+        echo "✅ Dry-run scan completed"
 
-    - name: 🧪 Runtime Integrity Check
+    - name: 📊 Validate Report Generation
       run: |
-        echo "[STEP] Verifying LogSanitizer core logic..."
-        node LogSanitizer.js --help
-      # Ensures the CLI interface is operational
-      
+        if [ -f "report.json" ]; then
+          echo "✅ report.json generated successfully"
+          cat report.json | head -20
+          mkdir -p ${{ env.REPORT_DIR }}
+          cp report.json ${{ env.REPORT_DIR }}/scan-report-${{ github.sha }}.json
+        else
+          echo "❌ report.json not found"
+          exit 1
+        fi
+
+    - name: 🗄️ Upload Audit Artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: sovereign-audit-${{ github.sha }}
+        path: ${{ env.REPORT_DIR }}/
+        retention-days: 7
+        if-no-files-found: warn
+
+    - name: 🧹 Cleanup Test Artifacts
+      run: |
+        rm -f report.json *.bak
+        echo "✅ Cleanup completed"
+
+  compatibility-check:
+    name: 🔄 Node.js Compatibility
+    runs-on: ubuntu-latest
+    needs: safety-check
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+    - uses: actions/checkout@v4
+      with: { fetch-depth: 1 }
+
+    - name: Setup Node ${{ matrix.node-version }}      uses: actions/setup-node@v4
+      with: { node-version: ${{ matrix.node-version }} }
+
+    - name: Quick Syntax & Logic Check
+      run: |
+        node --check LogSanitizer.js && echo "✅ Syntax OK on Node ${{ matrix.node-version }}"
+        node LogSanitizer.js --help > /dev/null && echo "✅ CLI loads OK"
+
+  philosophy-check:
+    name: 🧘 Philosophy Alignment (Optional)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: safety-check
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Verify Manifesto Presence
+      run: |
+        grep -q "THE MANIFESTO" README.md && echo "✅ Manifesto found"
+        grep -q "Mkhitarian" README.md && echo "✅ Philosophy reference OK"
