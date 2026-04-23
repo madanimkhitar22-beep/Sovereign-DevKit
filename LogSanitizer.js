@@ -1,6 +1,6 @@
 /**
  * ============================================================
- *  Sovereign-DevKit: LogSanitizer.js  v3.0
+ *  Sovereign-DevKit: LogSanitizer.js  v3.1
  *  Advanced Sensitive Data Detector & Log Sanitizer
  * ------------------------------------------------------------
  *  Author  : El Madani El Mkhitar
@@ -10,10 +10,12 @@
  * ============================================================
  *
  *  USAGE:
- *    node LogSanitizer.js <file>          — scan a single file
- *    node LogSanitizer.js <folder>        — scan all files in folder
- *    node LogSanitizer.js <folder> --ext .js,.ts,.env   — filter by extension
- *    node LogSanitizer.js <file>   --fix  — redact leaks in-place
+ *    node LogSanitizer.js <file>                    — scan a single file
+ *    node LogSanitizer.js <folder>                  — scan all files in folder
+ *    node LogSanitizer.js <folder> --ext .js,.ts    — filter by extension
+ *    node LogSanitizer.js <file>   --fix            — redact leaks in-place
+ *    node LogSanitizer.js <file>   --dry-run        — preview changes only
+ *    node LogSanitizer.js <file>   --no-backup      — skip .bak creation
  * ============================================================
  */
 
@@ -46,7 +48,6 @@ const SENSITIVE_PATTERNS = [
   { name: 'Square Access Token',    source: /sq0atp-[0-9A-Za-z\-_]{22}/                                       },
   { name: 'PayPal Token',           source: /access_token\$production\$[0-9a-z]{16}\$[0-9a-f]{32}/            },
   { name: 'Braintree Access Token', source: /access_token\$[a-zA-Z0-9_]{1,50}/                                },
-
   // Version Control & CI
   { name: 'GitHub Token (Classic)', source: /ghp_[a-zA-Z0-9]{36}/                                             },
   { name: 'GitHub OAuth Token',     source: /gho_[a-zA-Z0-9]{36}/                                             },
@@ -94,11 +95,8 @@ const SENSITIVE_PATTERNS = [
 function scanLine(line, lineNumber) {
   const hits = [];
   for (const { name, source } of SENSITIVE_PATTERNS) {
-    // ✅ Fresh RegExp on every call — fixes the JS regex lastIndex bug
     const regex = new RegExp(source.source, 'i');
-    if (regex.test(line)) {
-      // Redact the matched value in the preview for safety
-      const preview = line.trim().replace(regex, '[REDACTED]');
+    if (regex.test(line)) {      const preview = line.trim().replace(regex, '[REDACTED]');
       hits.push({ name, lineNumber, preview });
     }
   }
@@ -120,10 +118,36 @@ function redactContent(content) {
 }
 
 /**
- * Scan a single file. Returns the number of leaks found.
+ * Create a backup of the file before modification.
  * @param {string} filePath
+ * @param {string} content
+ */
+function createBackup(filePath, content) {
+  const backupPath = `${filePath}.bak`;
+  fs.writeFileSync(backupPath, content, 'utf8');
+  return backupPath;
+}
+
+/**
+ * Export scan results to report.json
+ * @param {Array} results
+ * @param {string} target
+ */
+function exportReport(results, target) {
+  const report = {
+    timestamp: new Date().toISOString(),
+    target: path.resolve(target),
+    totalLeaks: results.reduce((sum, r) => sum + r.leaks, 0),
+    files: results.filter(r => r.leaks > 0)
+  };
+  fs.writeFileSync('report.json', JSON.stringify(report, null, 2), 'utf8');
+  console.log(`  📄 Report exported → report.json`);
+}
+
+/**
+ * Scan a single file. Returns leak info object. * @param {string} filePath
  * @param {object} options
- * @returns {number}
+ * @returns {{filePath, leaks, hits: Array}}
  */
 function scanFile(filePath, options = {}) {
   let data;
@@ -131,71 +155,72 @@ function scanFile(filePath, options = {}) {
     data = fs.readFileSync(filePath, 'utf8');
   } catch (err) {
     console.error(`  [ERROR] Cannot read "${filePath}": ${err.message}`);
-    return 0;
+    return { filePath, leaks: 0, hits: [] };
   }
 
-  const lines    = data.split('\n');
-  let leakCount  = 0;
-  const allHits  = [];
+  const lines   = data.split('\n');
+  const allHits = [];
 
   lines.forEach((line, idx) => {
     const hits = scanLine(line, idx + 1);
-    hits.forEach(hit => {
-      leakCount++;
-      allHits.push(hit);
-    });
+    hits.forEach(hit => allHits.push(hit));
   });
 
-  // ── Report ──
   const relPath = path.relative(process.cwd(), filePath);
-  if (leakCount === 0) {
+  
+  if (allHits.length === 0) {
     console.log(`  [✅ SAFE]  ${relPath}`);
-  } else {
-    console.log(`  [⚠️  LEAK]  ${relPath}  — ${leakCount} issue(s)`);
-    allHits.forEach(({ name, lineNumber, preview }) => {
-      console.warn(`             → Line ${lineNumber} | ${name}`);
-      console.warn(`               ${preview}`);
-    });
+    return { filePath, leaks: 0, hits: [] };
+  }
 
-    // ── Auto-fix ──
-    if (options.fix) {
+  console.log(`  [⚠️  LEAK]  ${relPath}  — ${allHits.length} issue(s)`);
+  allHits.forEach(({ name, lineNumber, preview }) => {
+    console.warn(`             → Line ${lineNumber} | ${name}`);
+    console.warn(`               ${preview}`);
+  });
+
+  // ── Auto-fix logic with safety layers ──
+  if (options.fix) {
+    if (options.dryRun) {
+      console.log(`             🔍 [DRY-RUN] Would redact ${allHits.length} item(s) in ${relPath}`);
+    } else {
+      if (options.backup) {
+        const backupPath = createBackup(filePath, data);
+        console.log(`             💾 Backup saved → ${path.basename(backupPath)}`);
+      }
       const sanitized = redactContent(data);
       fs.writeFileSync(filePath, sanitized, 'utf8');
       console.log(`             ✏️  File redacted and saved.`);
     }
   }
 
-  return leakCount;
-}
+  return { filePath, leaks: allHits.length, hits: allHits };}
 
 /**
  * Recursively scan a directory.
  * @param {string} dirPath
  * @param {object} options
- * @returns {number}
+ * @returns {Array<{filePath, leaks, hits}>}
  */
 function scanDirectory(dirPath, options = {}) {
-  let total = 0;
-
+  const results = [];
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+  
   for (const entry of entries) {
     const fullPath = path.join(dirPath, entry.name);
-
-    // Skip hidden files/folders and node_modules
     if (entry.name.startsWith('.') || entry.name === 'node_modules') continue;
 
     if (entry.isDirectory()) {
-      total += scanDirectory(fullPath, options);
+      results.push(...scanDirectory(fullPath, options));
     } else if (entry.isFile()) {
-      // Extension filter
       if (options.extensions && options.extensions.length > 0) {
         const ext = path.extname(entry.name).toLowerCase();
         if (!options.extensions.includes(ext)) continue;
       }
-      total += scanFile(fullPath, options);
+      results.push(scanFile(fullPath, options));
     }
   }
-  return total;
+  return results;
 }
 
 // ─────────────────────────────────────────────
@@ -207,7 +232,7 @@ function main() {
   if (args.length === 0 || args.includes('--help') || args.includes('-h')) {
     console.log(`
 ╔══════════════════════════════════════════════╗
-║      Sovereign-DevKit: LogSanitizer v3.0     ║
+║      Sovereign-DevKit: LogSanitizer v3.1     ║
 ║      Built by El Madani El Mkhitar           ║
 ╚══════════════════════════════════════════════╝
 
@@ -218,22 +243,33 @@ ARGUMENTS:
   <target>           File or folder path to scan
 
 OPTIONS:
-  --fix              Redact detected leaks in-place
+  --fix              Redact detected leaks in-place  --dry-run          Preview changes without modifying files (use with --fix)
+  --backup           Create .bak backup before fixing (default: ON)
+  --no-backup        Skip backup creation when using --fix
   --ext <exts>       Comma-separated extensions to scan
                      e.g. --ext .js,.ts,.env,.json
+  --report           Export results to report.json
   --help, -h         Show this help message
+
+SAFETY FIRST:
+  • Always test with --dry-run before using --fix
+  • Backups are saved as <file>.bak by default
+  • Run without --fix for read-only scanning
 
 EXAMPLES:
   node LogSanitizer.js ./src
-  node LogSanitizer.js server.js
-  node LogSanitizer.js ./project --ext .js,.env
-  node LogSanitizer.js ./project --fix
+  node LogSanitizer.js server.js --dry-run
+  node LogSanitizer.js ./project --fix --backup
+  node LogSanitizer.js ./project --ext .js,.env --report
     `);
     process.exit(0);
   }
 
-  const target = args[0];
-  const fix    = args.includes('--fix');
+  const target     = args[0];
+  const fix        = args.includes('--fix');
+  const dryRun     = args.includes('--dry-run');
+  const backup     = !args.includes('--no-backup'); // ON by default
+  const exportRep  = args.includes('--report');
 
   // Parse --ext flag
   let extensions = [];
@@ -245,7 +281,7 @@ EXAMPLES:
       .filter(Boolean);
   }
 
-  const options = { fix, extensions };
+  const options = { fix, dryRun, backup, extensions };
 
   // Validate target
   if (!fs.existsSync(target)) {
@@ -256,37 +292,51 @@ EXAMPLES:
   // ── Header ──
   console.log(`
 ╔══════════════════════════════════════════════╗
-║      Sovereign-DevKit: LogSanitizer v3.0     ║
-╚══════════════════════════════════════════════╝
+║      Sovereign-DevKit: LogSanitizer v3.1     ║╚══════════════════════════════════════════════╝
   Target     : ${path.resolve(target)}
-  Fix mode   : ${fix ? 'ON  ⚠️  Files will be modified' : 'OFF (read-only)'}
+  Fix mode   : ${fix ? (dryRun ? 'DRY-RUN 🔍' : 'ON ⚠️') : 'OFF (read-only)'}
+  Backup     : ${fix && !dryRun ? (backup ? 'ON 💾' : 'OFF') : 'N/A'}
   Extensions : ${extensions.length ? extensions.join(', ') : 'all files'}
   Patterns   : ${SENSITIVE_PATTERNS.length} detectors active
 ──────────────────────────────────────────────`);
 
   const stat = fs.statSync(target);
-  let totalLeaks = 0;
+  let results = [];
 
   if (stat.isFile()) {
-    totalLeaks = scanFile(target, options);
+    results = [scanFile(target, options)];
   } else if (stat.isDirectory()) {
-    totalLeaks = scanDirectory(target, options);
+    results = scanDirectory(target, options);
   } else {
     console.error('[ERROR] Target must be a file or directory.');
     process.exit(1);
   }
 
+  // ── Export report if requested ──
+  if (exportRep) {
+    exportReport(results, target);
+  }
+
   // ── Summary ──
+  const totalLeaks = results.reduce((sum, r) => sum + r.leaks, 0);
   console.log('──────────────────────────────────────────────');
+  
   if (totalLeaks === 0) {
     console.log('[✅ ALL CLEAR] No sensitive data detected.');
     process.exit(0);
   } else {
-    console.log(`[⚠️  ACTION REQUIRED] ${totalLeaks} leak(s) detected.`);
-    if (!fix) {
+    if (dryRun) {
+      console.log(`[🔍 DRY-RUN] ${totalLeaks} leak(s) would be redacted.`);
+      console.log('   Run without --dry-run to apply changes.');
+    } else if (!fix) {
+      console.log(`[⚠️  ACTION REQUIRED] ${totalLeaks} leak(s) detected.`);
       console.log('   Run with --fix to automatically redact leaks.');
+      console.log('   Tip: Use --dry-run first to preview changes.');
+    } else {
+      console.log(`[✅ FIXED] ${totalLeaks} leak(s) processed.`);
+      if (backup) console.log('   Original files saved as .bak');
     }
-    process.exit(1);
+    process.exit(fix && !dryRun ? 0 : 1);
   }
 }
 
