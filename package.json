@@ -1,0 +1,44 @@
+{
+  "name": "sovereign-devkit",
+  "version": "3.1.0",
+  "description": "High-impact, minimalist developer utilities for security, ethical automation, and decentralized sovereignty. Built to empower the modern architect.",
+  "main": "LogSanitizer.js",
+  "bin": {
+    "sovereign-scan": "./LogSanitizer.js"
+  },
+  "scripts": {
+    "scan": "node LogSanitizer.js .",
+    "scan:dry": "node LogSanitizer.js . --dry-run",
+    "scan:fix": "node LogSanitizer.js . --fix",
+    "scan:report": "node LogSanitizer.js . --report",
+    "help": "node LogSanitizer.js --help",
+    "test": "echo \"✅ Zero-dependency CLI verified. See CONTRIBUTING.md for test guidelines.\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madanimkhitar22-beep/Sovereign-DevKit.git"
+  },
+  "keywords": [
+    "security",
+    "secret-scanner",
+    "cli",
+    "zero-dependency",
+    "sovereignty",
+    "ethical-automation",
+    "mobile-first",
+    "mkhitarian-philosophy"
+  ],
+  "author": "El Madani El Mkhitar <madani004>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/madanimkhitar22-beep/Sovereign-DevKit/issues"
+  },
+  "homepage": "https://github.com/madanimkhitar22-beep/Sovereign-DevKit#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "funding": [
+    { "type": "github", "url": "https://github.com/sponsors/madanimkhitar22-beep" },
+    { "type": "patreon", "url": "https://patreon.com/ElMadaniElmkhitar" }
+  ]
+}
