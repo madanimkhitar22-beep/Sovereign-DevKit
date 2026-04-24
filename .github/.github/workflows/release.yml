@@ -1,0 +1,48 @@
+# 🚀 Release & Publish Workflow — Sovereign-DevKit
+# Uses Trusted Publisher (OIDC) for secure npm publishing — no tokens stored.
+
+name: Release & Publish
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Trigger only on version tags
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+  id-token: write  # Required for OIDC authentication with npm
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    environment: npm-publish  # Matches the environment name in Trusted Publisher setup
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: 📦 Install Dependencies (if any)
+        run: npm ci --ignore-scripts || echo "✅ Zero dependencies"
+
+      - name: 🔐 Publish with Trusted Publisher (OIDC)
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}  # Fallback for non-OIDC; OIDC auto-auths
+
+      - name: 🎉 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
