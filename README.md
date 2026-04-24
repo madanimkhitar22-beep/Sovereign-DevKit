@@ -1,78 +1,89 @@
 <div align="center">
 
-# 🏛️ Sovereign-DevKit
-### *The Architecture of Digital Will & Ethical Sovereignty*
+# 🛡️ Sovereign-DevKit
+### *Security That Respects Your Intent • Built for Humans, Not Just Machines*
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-00FF41?style=for-the-badge&logo=opensourceinitiative&logoColor=white)
 ![Status: Operational](https://img.shields.io/badge/Status-Operational-green?style=for-the-badge&logo=githubactions&logoColor=white)
 ![Version: 3.1.0](https://img.shields.io/badge/Version-3.1.0-blue?style=for-the-badge&logo=github&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?style=for-the-badge&logo=node.js&logoColor=white)
-![Built With: Pure Intent](https://img.shields.io/badge/Built_With-Pure_Intent-black?style=for-the-badge&logo=lightning&logoColor=white)
+![npm](https://img.shields.io/npm/v/sovereign-devkit?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)
+![Downloads](https://img.shields.io/npm/dm/sovereign-devkit?style=for-the-badge&logo=npm&logoColor=white)
 ![Mobile-First](https://img.shields.io/badge/%F0%9F%93%B1_Mobile_First-Termux-orange?style=for-the-badge&logo=android&logoColor=white)
 
 </div>
 
 ---
 
-<div align="center">
+## 🎯 In One Minute
 
-### ❖ THE MANIFESTO ❖
+**What it solves**: Accidentally committing an API key, password, or token to GitHub? It happens. `Sovereign-DevKit` scans your code **before** it leaks, and helps you fix it **safely**.
 
-> *"High-level global infrastructure is not a matter of hardware, but a manifestation of Sovereign Will.*  
-> *Developed entirely on a **Redmi Note 10** from the solitude of Tetouan,*  
-> *this kit proves that the mind is the ultimate command center."*
+**Who it's for**:
+- 👨‍💻 Developers who want simple, auditable security — no dashboards, no subscriptions
+- 🌍 Builders in resource-constrained environments (mobile, low-spec, offline-first)
+- 🔐 Teams starting their security journey and need a gentle, intentional entry point
+- 🧠 Researchers exploring ethical alignment in automated systems
 
-**— El Madani El Mkhitar** • Founder of Mkhitarian Philosophy
-
-</div>
+**Try it now** (no install needed):
+```bash
+npx sovereign-scan ./my-project --dry-run
+```
+→ See what it finds. Change nothing. Decide consciously.
 
 ---
 
-## ⚡ Quick Start (30 seconds from mobile)
+## 💼 Why Choose Sovereign-DevKit? (Market Differentiators)
+
+<div align="center">
+
+| Need | Typical Tool | Sovereign-DevKit |
+|------|-------------|------------------|
+| 🔐 **Detect secrets** | ✅ Yes | ✅ 35+ patterns, high precision |
+| 📱 **Works on phone** | ❌ Rarely | ✅ Built for Termux, <2% battery/scan |
+| 🔄 **Safe fixes** | ⚠️ Auto-redact only | ✅ `--dry-run` → preview → confirm → fix |
+| 💾 **Backup before change** | ❌ Usually not | ✅ `.bak` auto-created (default ON) |
+| 📊 **Audit trail** | 💰 Enterprise add-on | ✅ `--report` exports `report.json` free |
+| 🌐 **Zero dependencies** | ❌ Heavy npm trees | ✅ Pure Node.js built-ins only |
+| 🧠 **Ethical by design** | ❌ Automation-first | ✅ Intent-first: you decide, tool executes |
+| 💰 **Cost** | 💸 $/month or per seat | ✅ Free • MIT • Forever |
+
+</div>
+
+> 🎯 **Bottom line**: If you value **control**, **simplicity**, and **sovereignty** over "more features", this is your tool.
+
+---
+
+## 🚀 Quick Start (30 seconds)
 
 ```bash
-# 🔍 Quick scan (read-only)
-node LogSanitizer.js ./src
+# 🔍 Scan (read-only)
+npx sovereign-scan ./src
 
-# 🔐 Preview changes before applying
-node LogSanitizer.js ./src --fix --dry-run
+# 👁️ Preview fixes without changing anything
+npx sovereign-scan ./src --fix --dry-run
 
-# ✏️ Apply fixes with auto-backup
-node LogSanitizer.js ./src --fix
+# ✏️ Apply fixes + auto-backup originals
+npx sovereign-scan ./src --fix
 
 # 📊 Export audit report
-node LogSanitizer.js ./src --report
+npx sovereign-scan ./src --report
 ```
 
-> 💡 **Pro Tip:** Add this alias to `~/.bashrc` for faster access:
+> 💡 **Pro Tip**: Add to `~/.bashrc` for faster access:
 > ```bash
-> alias sanitize='node ~/Sovereign-DevKit/LogSanitizer.js'
+> alias sanitize='npx sovereign-scan'
 > # Usage: sanitize ./project --dry-run
 > ```
 
 ---
 
-## 🛡️ LogSanitizer.js — v3.1.0
-
-<div align="center">
-
-| Feature | Status | Description |
-|---------|--------|-------------|
-| 🔍 Smart Detection | ✅ 35 patterns | Cloud, AI, Payments, Web3, Databases |
-| 🎯 High Precision | ✅ <0.1% false positives | Fixed `lastIndex` regex bug |
-| 🛡️ Safe Output | ✅ `[REDACTED]` | Values hidden even in scan logs |
-| 🔄 Recursive Scan | ✅ Unlimited depth | Auto-skips `node_modules` & hidden files |
-| 📱 Zero Dependencies | ✅ Pure Node.js | Runs on any device with Node 20+ |
-
-</div>
-
-### 🔍 Detection Coverage
+## 🛡️ What It Detects (35+ Patterns)
 
 <details>
-<summary>📦 Click to expand full list (35 patterns)</summary>
+<summary>📦 Click to expand full detection list</summary>
 
-| Category | Detected Patterns |
-|----------|------------------|
+| Category | Examples |
+|----------|----------|
 | ☁️ Cloud | Google API, AWS Access/Secret, Azure Storage |
 | 🤖 AI Services | OpenAI `sk-`, Anthropic `sk-ant-`, HuggingFace `hf_` |
 | 💳 Payments | Stripe `sk_live_`, PayPal, Square, Braintree |
@@ -86,49 +97,30 @@ node LogSanitizer.js ./src --report
 
 ---
 
-## 🎛️ v3.1.0 Safety Controls
-
-<div align="center">
-
-### 🧭 Options Reference
-
-| Goal | Flag | Behavior |
-|------|------|----------|
-| 👁️ Preview only | `--dry-run` | Shows changes without modifying files |
-| 💾 Auto-backup | `--backup` *(default)* | Creates `.bak` before any change |
-| ⚡ Skip backup | `--no-backup` | For advanced users who manage backups externally |
-| 📊 Export report | `--report` | Generates `report.json` for audit trails |
-| 🎯 Filter files | `--ext .js,.env` | Scan only specified extensions |
-| ✏️ Apply fixes | `--fix` | Redact detected leaks in-place |
-
-### 🔄 Recommended Safe Workflow
+## 🧭 Safety-First Workflow (How It Protects You)
 
 ```
 1. 🔍 Scan (read-only)
-   → node LogSanitizer.js ./src
+   → See what's at risk, no changes made
 
-2. 👁️ Preview changes
-   → node LogSanitizer.js ./src --fix --dry-run
+2. 👁️ Preview (--dry-run)
+   → Review exactly what would be redacted
 
-3. ✏️ Apply with backup (default)
-   → node LogSanitizer.js ./src --fix
+3. ✏️ Confirm & Fix (--fix)
+   → Apply changes ONLY after your approval
+   → Originals auto-saved as .bak (default)
 
-4. 📊 Export audit trail
-   → node LogSanitizer.js ./src --report
+4. 📊 Document (--report)
+   → Export audit trail for compliance or peace of mind
 ```
 
-</div>
-
-### 📟 Sample Output (with Safety Controls)
-
+### 📟 Sample Output
 ```
 ╔══════════════════════════════════════════════╗
 ║      Sovereign-DevKit: LogSanitizer v3.1     ║
 ╚══════════════════════════════════════════════╝
   Target     : /home/user/project
   Fix mode   : DRY-RUN 🔍 (preview only)
-  Backup     : N/A (dry-run active)
-  Extensions : .js, .env
   Patterns   : 35 detectors active
 ──────────────────────────────────────────────
   [⚠️  LEAK]  config.js  — 2 issue(s)
@@ -139,142 +131,147 @@ node LogSanitizer.js ./src --report
 ──────────────────────────────────────────────
 [🔍 DRY-RUN] 2 leak(s) would be redacted.
    Run without --dry-run to apply changes.
-   💡 Tip: Use --backup to save originals first.
 ```
 
 ---
 
-## 🔄 CI/CD Integration
+## 🌍 Real-World Use Cases
+
+| Scenario | How Sovereign-DevKit Helps |
+|----------|---------------------------|
+| 🧑‍💻 **Solo developer** | Catch leaks before `git push` — no team, no CI needed |
+| 🏢 **Startup team** | Lightweight pre-commit check without enterprise overhead |
+| 📱 **Mobile-first builder** | Full security workflow from Termux, no laptop required |
+| 🎓 **Student / learner** | Understand security patterns through transparent, simple code |
+| 🔬 **Ethics researcher** | Study how "intent-first" design affects automation outcomes |
+| 🌐 **Web3 contributor** | Scan contracts, scripts, and configs for exposed keys before deployment |
+
+---
+
+## ⚙️ Technical Highlights (For the Curious)
 
 <div align="center">
 
-| Workflow | Trigger | Purpose |
-|----------|---------|---------|
-| **`ci.yml`** | Every push & PR | Auto-run `--dry-run` on changes |
-| **`codeql.yml`** | Push to main + weekly | Deep security analysis |
-| **`release.yml`** | On tag `v*.*.*` | Auto-publish GitHub Release |
-| **`dependabot.yml`** | Weekly (Monday) | Keep dependencies updated |
+| Feature | Implementation | Benefit |
+|---------|---------------|---------|
+| 🔍 High-precision detection | Fresh `RegExp` per call + `lastIndex` fix | <0.1% false positives |
+| 🛡️ Safe output | Values redacted as `[REDACTED]` in logs | No secondary leaks via scan output |
+| 🔄 Recursive scanning | Auto-skips `node_modules/`, hidden files | Fast, focused, no noise |
+| 📦 Zero dependencies | Pure Node.js built-ins (`fs`, `path`) | Install once, run anywhere |
+| 🧪 CI/CD ready | `sovereign-audit.yml` + `codeql.yml` included | Security scales with your project |
 
 </div>
 
-### 🚀 Publishing a New Release (from mobile)
+---
 
-```bash
-# 1. Verify stability
-node LogSanitizer.js ./ --ext .js,.env --report
+## 🔄 Integration & Automation
 
-# 2. Tag the release
-git tag -a v3.1.1 -m "Sovereign-DevKit v3.1.1: [brief description]"
-
-# 3. Push and publish
-git push origin main --tags
-# Then create "Release" via GitHub web interface
+```yaml
+# Example: GitHub Actions snippet
+- name: 🔍 Security Scan
+  run: npx sovereign-scan ./src --dry-run --report
 ```
+
+| Workflow | Purpose |
+|----------|---------|
+| `sovereign-audit.yml` | Auto-run `--dry-run` on every push/PR |
+| `codeql.yml` | Deep static analysis for logic vulnerabilities |
+| `dependabot.yml` | Keep Node.js environment updated (low-noise) |
+| `release.yml` | Auto-publish releases + npm with provenance |
+
+🔗 [View all workflows](.github/workflows/)
 
 ---
 
-## 🧘 Philosophical Anchor
-
-<div align="center">
+## 🧘 Built on Principles, Not Just Code
 
 > *"Sovereignty is not speed — it is the discipline to preview, confirm, then execute."*
 
-This project is a practical embodiment of the **[Mkhitarian Philosophy](https://github.com/madanimkhitar22-beep/Mekhitarian-Philosophy-)**:  
-Bridging **Digital Consciousness** and **Decentralized Infrastructure**, ensuring technology serves human essence, not the reverse.
-
-### 🧬 Core Principles
+Sovereign-DevKit embodies the **[Mkhitarian Philosophy](https://github.com/madanimkhitar22-beep/Mekhitarian-Philosophy-)**:
 
 ```
-[1] 🎯 Intent Before Code      → Every function carries clear purpose
-[2] 🛡️ Sovereignty Before Ease → Tools that empower control, not restrict
-[3] 🔍 Transparency Before Opacity → Every line open and auditable
+[1] 🎯 Intent Before Code      → You decide; the tool executes
+[2] 🛡️ Sovereignty Before Ease → Control is never automated away
+[3] 🔍 Transparency Before Opacity → Every pattern is visible, auditable
 [4] ⚡ Simplicity Before Complexity → Maximum impact, zero dependencies
 [5] 📱 Human Before Machine    → Designed for mind, runs on any device
 ```
 
-</div>
+This isn't just a tool — it's a **statement**: technology should serve human judgment, not replace it.
 
 ---
 
-## ⚡ Infrastructure Status
+## 👤 Built By
 
 <div align="center">
 
-| Layer | Details |
-|-------|---------|
-| 🌍 Location | Tetouan, Morocco 🇲🇦 (UTC+1) |
-| 📱 Hardware | Redmi Note 10 • Mobile-First • Termux |
-| ⚙️ Engine | SovereignFlow v1.0 • Pure Node.js |
-| 🔋 Efficiency | <2% battery/scan • No persistent connection required |
-| 👨‍💻 Architect | [El Madani El Mkhitar](https://github.com/madanimkhitar22-beep) |
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0009--6663--902X-A6CE39?style=flat-square&logo=orcid&logoColor=white)](https://orcid.org/0009-0009-6663-902X)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/el-madani-el-mkhitar-625753173)
+[![X/Twitter](https://img.shields.io/badge/X-000000?style=flat-square&logo=x&logoColor=white)](https://x.com/madaniElmkhitar)
 
-</div>
+**El Madani El Mkhitar**  
+🇲🇦 Tetouan, Morocco • 📱 Redmi Note 10 + Termux  
+*Founder, Mkhitarian Philosophy • Digital Consciousness Researcher*
 
----
-
-## 👤 Verified Identity & Connect
-
-<div align="center">
-
-[![ORCID](https://img.shields.io/badge/ORCID-0009--0009--6663--902X-A6CE39?style=for-the-badge&logo=orcid&logoColor=white)](https://orcid.org/0009-0009-6663-902X)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/el-madani-el-mkhitar-625753173)
-[![X/Twitter](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/madaniElmkhitar)
-[![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/MbQDsnjD)
-
-**🌟 Founder, Mkhitarian Philosophy** | **🧠 Digital Consciousness Researcher** | **🚀 Pi Network Architect**
-
-[*Explore Mkhitarian Philosophy →*](https://github.com/madanimkhitar22-beep/Mekhitarian-Philosophy-)
+[*Explore the philosophy →*](https://github.com/madanimkhitar22-beep/Mekhitarian-Philosophy-)
 
 </div>
 
 ---
 
-## 🤝 Sponsor the Sovereign Mission
+## 🤝 Support the Mission
+
+*If this tool helps you build with more intention, safety, or sovereignty — your support fuels ethical, minimalist innovation.*
 
 <div align="center">
-
-*If these tools secure your systems or inspire your journey,*  
-*your support fuels ethical, decentralized, minimalist innovation.*
-
-### 🎯 Choose Your Impact Level
 
 | Tier | Impact | Link |
 |------|--------|------|
-| ☕ **Coffee** | Powers late-night development sessions | [Buy Me A Coffee](https://buymeacoffee.com/PiTrust) |
-| 💻 **Tooling** | Funds cloud testing credits & domains | [GitHub Sponsors](https://github.com/sponsors/madanimkhitar22-beep) |
-| 🚀 **Freedom** | Enables transition: phone → laptop → full-time research | [Patreon](https://patreon.com/ElMadaniElmkhitar) |
+| ☕ **Coffee** | Powers late-night development | [Buy Me A Coffee](https://buymeacoffee.com/PiTrust) |
+| 💻 **Tooling** | Funds testing credits & domains | [GitHub Sponsors](https://github.com/sponsors/madanimkhitar22-beep) |
+| 🚀 **Freedom** | Enables transition: phone → laptop → research | [Patreon](https://patreon.com/ElMadaniElmkhitar) |
 
-### 🌟 Even a Star Makes a Difference
-> *A star on a repo = signal of interest + attracts collaborators + validates the mission.*
+### 🌟 Even a Star Helps
+> *A star on this repo = signal of interest + attracts collaborators + validates the mission.*
 
-[![GitHub Sponsors](https://img.shields.io/badge/%F0%9F%92%9A_Sponsor_on_GitHub-28a745?style=for-the-badge&logo=github-sponsors&logoColor=white)](https://github.com/sponsors/madanimkhitar22-beep)
-[![Buy Me A Coffee](https://img.shields.io/badge/%E2%98%95_Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/PiTrust)
-[![Patreon](https://img.shields.io/badge/%F0%9F%8C%9F_Support_on_Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://patreon.com/ElMadaniElmkhitar)
-
-### [🚀 BECOME A STRATEGIC SPONSOR →](https://github.com/sponsors/madanimkhitar22-beep)
+[![GitHub Sponsors](https://img.shields.io/badge/%F0%9F%92%9A_Sponsor-28a745?style=for-the-badge&logo=github-sponsors&logoColor=white)](https://github.com/sponsors/madanimkhitar22-beep)
 
 </div>
+
+---
+
+## 🗺️ What's Next? (Roadmap)
+
+```
+[✅ v3.1] Safety Controls (dry-run, backup, report)
+     ↓
+[🟢 v3.5] Policy Engine (.sovereign-policy for custom rules)
+     ↓
+[🟡 v4.0] Signed Audits (cryptographic proof of scan integrity)
+     ↓
+[🟠 v4.5] Mobile Watch Mode (low-battery background scanning)
+     ↓
+[🔴 v5.0] Intent Layer (ethical guardrails for autonomous agents)
+```
+
+> 💬 **Have an idea?** Open an issue or discussion — every voice shapes the roadmap.
 
 ---
 
 <div align="center">
 
-### 🗺️ Roadmap Ahead
+### ❓ Questions? Ideas? Just Want to Say Hi?
 
-```
-[✅ v3.1] Safety Controls  →  [🟢 v3.5] Policy Engine  →  [🟡 v4.0] Signed Audits
-                                  ↓
-                    [🟠 v4.5] Mobile Watch Mode  →  [🔴 v5.0] Intent Layer
-```
+> *"I built this on a Redmi Note 10 in Morocco because I believe vision matters more than resources.  
+> If this tool helps you build with more intention, more safety, or more sovereignty — that's the real success.  
+> I'm here. 🙏"*  
+> — El Madani El Mkhitar
 
-> *"Architecture is a product of thought — not infrastructure.*  
-> *Constraints refine systems instead of limiting them."*
+🔗 [GitHub Discussions](https://github.com/madanimkhitar22-beep/Sovereign-DevKit/discussions) • [Report an Issue](https://github.com/madanimkhitar22-beep/Sovereign-DevKit/issues)
 
 ---
 
-<sub>© 2026 Sovereign-DevKit • Built by <a href="https://github.com/madanimkhitar22-beep">@madanimkhitar22-beep</a> • "In the Name of the Creator, We Build."</sub>
+<sub>© 2026 Sovereign-DevKit • Built with Intent by <a href="https://github.com/madanimkhitar22-beep">@madanimkhitar22-beep</a> • "In the Name of the Creator, We Build."</sub>
 
 </div>
 ```
-
----
