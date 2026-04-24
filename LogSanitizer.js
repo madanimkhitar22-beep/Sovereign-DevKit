@@ -35,7 +35,7 @@ const SENSITIVE_PATTERNS = [
   { name: 'Google API Key',         source: /AIza[0-9A-Za-z\-_]{35}/                                          },
   { name: 'Google OAuth Token',     source: /ya29\.[0-9A-Za-z\-_]+/                                           },
   { name: 'AWS Access Key ID',      source: /AKIA[0-9A-Z]{16}/                                                },
-  { name: 'AWS Secret Access Key',  source: /(?<![A-Z0-9])[A-Za-z0-9\/+=]{40}(?![A-Z0-9\/+=])/               },
+  { name: 'AWS Secret Access Key',  source: /(?<![A-Za-z0-9\/+=])(?![=\/+]{40})[A-Za-z0-9\/+=]{40}(?![A-Za-z0-9\/+=])/ },
   { name: 'Azure Storage Key',      source: /DefaultEndpointsProtocol=https;AccountName=[^;]+;AccountKey=[^;]+/ },
 
   // AI & ML Services
