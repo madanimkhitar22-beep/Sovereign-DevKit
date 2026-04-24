@@ -4,7 +4,7 @@
   "description": "High-impact, minimalist developer utilities for security, ethical automation, and decentralized sovereignty. Built to empower the modern architect.",
   "main": "LogSanitizer.js",
   "bin": {
-    "sovereign-scan": "./LogSanitizer.js"
+  "sovereign-scan": "./LogSanitizer.js"
   },
   "scripts": {
     "scan": "node LogSanitizer.js .",
