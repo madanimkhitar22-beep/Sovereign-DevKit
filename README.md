@@ -26,7 +26,7 @@
 
 **Try it now** (no install needed):
 ```bash
-npx sovereign-scan ./my-project --dry-run
+npx sovereign-devkit ./my-project --dry-run
 ```
 → See what it finds. Change nothing. Decide consciously.
 
@@ -55,23 +55,33 @@ npx sovereign-scan ./my-project --dry-run
 
 ## 🚀 Quick Start (30 seconds)
 
+> 💡 **Note**: Use the **package name** with `npx`: `sovereign-devkit`.  
+> After global install (`npm install -g`), use the **CLI command**: `sovereign-scan`.
+
+### Via npx (No install needed):
 ```bash
 # 🔍 Scan (read-only)
-npx sovereign-scan ./src
+npx sovereign-devkit ./src
 
 # 👁️ Preview fixes without changing anything
-npx sovereign-scan ./src --fix --dry-run
+npx sovereign-devkit ./src --fix --dry-run
 
 # ✏️ Apply fixes + auto-backup originals
-npx sovereign-scan ./src --fix
+npx sovereign-devkit ./src --fix
 
 # 📊 Export audit report
-npx sovereign-scan ./src --report
+npx sovereign-devkit ./src --report
 ```
 
-> 💡 **Pro Tip**: Add to `~/.bashrc` for faster access:
+### Or install globally first:
+```bash
+npm install -g sovereign-devkit
+sovereign-scan ./src --dry-run
+```
+
+> 💡 **Pro Tip**: Add alias to `~/.bashrc` for faster access:
 > ```bash
-> alias sanitize='npx sovereign-scan'
+> alias sanitize='npx sovereign-devkit'
 > # Usage: sanitize ./project --dry-run
 > ```
 
@@ -169,7 +179,7 @@ npx sovereign-scan ./src --report
 ```yaml
 # Example: GitHub Actions snippet
 - name: 🔍 Security Scan
-  run: npx sovereign-scan ./src --dry-run --report
+  run: npx sovereign-devkit ./src --dry-run --report
 ```
 
 | Workflow | Purpose |
