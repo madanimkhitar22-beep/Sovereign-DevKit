@@ -29,11 +29,11 @@ npx sovereign-devkit ./examples --dry-run
 → See what would have leaked.  
 → Change nothing. Decide consciously.
 
-### 📸 See it in action
+**See it caught in action:**
 
-![Demo Screenshot](screenshots/demo-dry-run.png)
+![Sovereign-DevKit Demo](demo.gif)
 
-*5 leaks detected in 0.3 seconds — zero changes made.*
+*5 leaks detected in 0.3 seconds — zero changes made (dry-run mode).*
 ---
 
 ## 🎯 In One Minute
