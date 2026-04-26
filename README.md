@@ -14,22 +14,42 @@
 
 ---
 
+## 🚨 You probably have this problem
+
+A forgotten API key.  
+A password in a config file.  
+A token committed before you noticed.
+
+**Don't guess. Know.**
+
+```bash
+npx sovereign-devkit ./examples --dry-run
+```
+
+→ See what would have leaked.  
+→ Change nothing. Decide consciously.
+
+### 📸 See it in action
+
+![Demo Screenshot](screenshots/demo-dry-run.png)
+
+*5 leaks detected in 0.3 seconds — zero changes made.*
+---
+
 ## 🎯 In One Minute
 
-**What it solves**: Accidentally committing an API key, password, or token to GitHub? It happens. `Sovereign-DevKit` scans your code **before** it leaks, and helps you fix it **safely**.
+**What it solves**: Accidentally committing secrets to GitHub? `Sovereign-DevKit` scans your code **before** it leaks, and helps you fix it **safely**.
 
 **Who it's for**:
-- 👨‍💻 Developers who want simple, auditable security — no dashboards, no subscriptions
-- 🌍 Builders in resource-constrained environments (mobile, low-spec, offline-first)
-- 🔐 Teams starting their security journey and need a gentle, intentional entry point
-- 🧠 Researchers exploring ethical alignment in automated systems
+- 👨‍💻 Developers who want simple, auditable security
+- 🌍 Builders in resource-constrained environments (mobile, low-spec)
+- 🔐 Teams starting their security journey
+- 🧠 Researchers exploring ethical alignment in automation
 
 **Try it now** (no install needed):
 ```bash
 npx sovereign-devkit ./my-project --dry-run
 ```
-→ See what it finds. Change nothing. Decide consciously.
-
 ---
 
 ## 💼 Why Choose Sovereign-DevKit? (Market Differentiators)
