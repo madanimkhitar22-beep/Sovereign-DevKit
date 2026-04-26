@@ -31,7 +31,7 @@ npx sovereign-devkit ./examples --dry-run
 
 **See it caught in action:**
 
-![Sovereign-DevKit Demo](demo.gif)
+<video src="demo.mp4" autoplay loop muted playsinline style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 12px 0;"></video>
 
 *5 leaks detected in 0.3 seconds — zero changes made (dry-run mode).*
 ---
